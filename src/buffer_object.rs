@@ -304,7 +304,7 @@ impl<T: 'static> BufferObject<T> {
     /// according to the width, height, stride and format of the buffer object.
     pub fn write(&mut self, buffer: &[u8]) -> Result<IoResult<()>, DeviceDestroyedError> {
         if self._device.upgrade().is_some() {
-            let result = unsafe { ::ffi::gbm_bo_write(self.ffi, buffer.as_ptr() as *const _, buffer.len()) };
+            let result = unsafe { ::ffi::gbm_bo_write(self.ffi, buffer.as_ptr() as *const _, buffer.len() as u32) };
             if result != 0 {
                 Ok(Err(IoError::last_os_error()))
             } else {
